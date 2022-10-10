@@ -1,0 +1,43 @@
+::before, ::after, *{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+.main-container {
+    width: 30%;
+    box-shadow: 0 0 2px 3px yellow;
+    margin: 10% auto;
+    border-radius: 1%;
+    
+}
+
+.display-area{
+    width: 100%;
+    height: 5em;
+    background-color: rgba(12, 0, 0, 0.808);
+    border-radius: 3%;
+    color: wheat;
+}
+
+.button-area {
+    width: 100%;
+    background-color: orange;
+    display: flex;
+    gap: 4px;
+    flex-wrap: nowrap;
+    margin: 4px 0;
+}
+
+.button-area button{
+    width: 3em;
+    height: 3em;
+    flex-grow: 1;
+    font-size: 1.5em;
+    background: #333;
+    border: 1px solid #ddd;
+    outline: none;
+    border-radius: 5%;
+    color: wheat;
+}
