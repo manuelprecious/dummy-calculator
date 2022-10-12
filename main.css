@@ -30,6 +30,7 @@ body {
     display: flex;
     flex-direction: column;
     text-align: end;
+    overflow: hidden;
 }
 
 .display-area .display1, .display2{
