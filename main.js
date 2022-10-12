@@ -14,9 +14,6 @@ let buttons = [...document.querySelectorAll('[data-number]')];
 let buttonClear = document.querySelector('[data-clear]');
 let buttonDelete = document.querySelector('[data-delete]');
 
-
-let pointOn = false;
-
 // method to push text to display.
 buttons.forEach(button=>{
     
@@ -40,6 +37,7 @@ buttonClear.addEventListener('click', e=>{
 
 // method to delete everything from the end of the display area.
 buttonDelete.addEventListener('click', e=>{
-    displayArea.textContent = displayArea.textContent.toString().slice(0, -1);
+    let textToString = displayArea.textContent.toString().slice(0, -1)
+    displayArea.textContent = parseInt(textToString);
 })
 
