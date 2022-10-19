@@ -1,7 +1,8 @@
 let numberButtons = [...document.querySelectorAll("[data-number]")];
 let displayArea2 = document.querySelector('.display2');
-let deleteButton = document.querySelector('[data-delete]')
-let clearButton = document.querySelector('[data-clear]')
+let deleteButton = document.querySelector('[data-delete]');
+let clearButton = document.querySelector('[data-clear]');
+let dataStateButton = document.querySelector('[data-state]');
 
 displayArea2.textContent = 0;
 
@@ -40,4 +41,4 @@ numberButtons.forEach(button => {
     })
 })
 
-console.log(deleteButton);
+// Adding Functionality to the data state button

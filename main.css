@@ -14,9 +14,10 @@ body {
 
 .main-container {
     width: 30%;
-    box-shadow: 0 0 50px 3px rgba(255, 255, 0, 0.26);
+    box-shadow: 0 0 5px 5px rgba(255, 255, 0, 0.26);
     margin: 5% auto;
     border-radius: 1%;
+    padding: 10px;
     
 }
 
@@ -52,7 +53,7 @@ body {
     width: 100%;
     background-color: orange;
     display: flex;
-    gap: 3px;
+    gap: 1px;
     flex-wrap: nowrap;
     margin: 4px 0;
 }
