@@ -1,43 +1,28 @@
-// class Calculator {
-//     constructor(){
+let numberButtons = [...document.querySelectorAll("[data-number]")];
+let displayArea2 = document.querySelector('.display2');
+
+displayArea2.textContent = 0;
 
 
 
+function initSum(){
+    return [...displayArea2.textContent].map(value => Number(value)).reduce((Accum, InitialVal) => Accum += InitialVal, 0);
+}
+console.log(typeof initSum());
 
 
-//     }    
-// }
+numberButtons.forEach(button => {
 
-let displayArea = document.querySelector(".display2");
-
-let buttons = [...document.querySelectorAll('[data-number]')];
-let buttonClear = document.querySelector('[data-clear]');
-let buttonDelete = document.querySelector('[data-delete]');
-
-// method to push text to display.
-buttons.forEach(button=>{
-    
-    button.addEventListener('click', e=>{
-
-        if(button.textContent === '.' && pointOn === false){
-            displayArea.textContent += button.textContent;
-            pointOn = true;
-        } else if(button.textContent === '.' && pointOn === true){
-            return;
-        } else{
-            displayArea.textContent += button.textContent;
+    button.addEventListener('click', event => {
+        if (displayArea2.textContent.indexOf('.') == -1 && event.target.textContent === '.') {
+            displayArea2.textContent += '.'
+        } else if (event.target.textContent !== '.' && initSum() !== 0) {
+            displayArea2.textContent += event.target.textContent;
+            console.log(initSum());
+        } else if (event.target.textContent !== '.' && initSum() === 0) {
+            displayArea2.textContent = event.target.textContent;
+            console.log(initSum())
         }
     })
-})
-
-//method to clear everything and clear the display area.
-buttonClear.addEventListener('click', e=>{
-    displayArea.textContent = '';
-})
-
-// method to delete everything from the end of the display area.
-buttonDelete.addEventListener('click', e=>{
-    let textToString = displayArea.textContent.toString().slice(0, -1)
-    displayArea.textContent = parseInt(textToString);
 })
 
