@@ -4,13 +4,28 @@ let displayArea2 = document.querySelector('.display2');
 let deleteButton = document.querySelector('[data-delete]');
 let clearButton = document.querySelector('[data-clear]');
 let buttonDataState = document.querySelector('[data-state]');
-let buttonAdd = document.querySelector('[data-add]');
-let buttonSubtract = document.querySelector('[data-subtract]');
-let buttonMultiply = document.querySelector('[data-multiply]');
-let buttonEquals = document.querySelector('[data-equals]');
-displayArea2.textContent = 0;
-let initialState = true;
 
+let buttonEquals = document.querySelector('[data-equals]');
+let operationButtons = [...document.querySelectorAll('[data-operation]')]
+let operand = '';
+
+displayArea2.textContent = 0;
+
+operationButtons.forEach(button=>{
+    button.addEventListener('click', event=>{
+        operand = event.target.textContent;
+        updateState(operand, event);
+    })
+})
+
+function updateState(usedOperand, element){
+    if(displayArea2.textContent.slice(-1) !== usedOperand){
+        displayArea2.textContent = displayArea2.textContent + usedOperand;
+    }
+}
+
+
+console.log(operand)
 
 // Functionality to check the Initial sum
 function initSum() {
@@ -33,7 +48,7 @@ clearButton.addEventListener('click', event => {
 })
 
 function clrAll(){
-    displayArea1.textContent = 0;
+    displayArea1.textContent = '';
     displayArea2.textContent = 0;
 }
 
@@ -54,35 +69,3 @@ numberButtons.forEach(button => {
     });
 });
 
-// Function for Adding
-buttonAdd.addEventListener('click', event=>{
-    displayArea1.textContent = Number(displayArea1.textContent) + Number(displayArea2.textContent);
-    clr();
-});
-
-buttonSubtract.addEventListener('click', event=>{
-    displayArea1.textContent = Number(displayArea1.textContent) - Number(displayArea2.textContent);
-    clr();
-});
-
-buttonMultiply.addEventListener('click', event=>{
-    if(displayArea2.textContent.length === 1 && initSum() === 0){
-        
-    }
-    displayArea1.textContent = Number(displayArea1.textContent) * Number(displayArea2.textContent);
-    clr();
-});
-
-// //Function for subtracting
-// buttonSubtract.addEventListener('click', event=>{
-//     // displayArea1.textContent = Number(displayArea1.textContent) - Number(displayArea2.textContent);
-//     // clr();
-//     console.log('My hox')
-// });
-
-// Function Equals
-buttonEquals.addEventListener('click', event=>{
-    if(typeof displayArea2.textContent === 'string' || typeof displayArea1.textContent === 'number'){
-        displayArea1.textContent = Number(displayArea2.textContent);
-    };
-});
