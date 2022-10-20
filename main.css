@@ -95,3 +95,15 @@ body {
         width: 60%;
     }
 }
+
+@media(max-width: 430px){
+    .main-container{
+        width: 80%;
+    }
+}
+
+@media(max-width: 270px){
+    .main-container{
+        width: 95%;
+    }
+}
