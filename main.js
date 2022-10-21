@@ -12,18 +12,21 @@ let operand = '';
 displayArea2.textContent = 0;
 let operationState = false;
 
-operationButtons.forEach(button=>{
-    button.addEventListener('click', event=>{
-        
+operationButtons.forEach(button => {
+    button.addEventListener('click', event => {
+
         operand = event.target.textContent;
         updateState(event);
     })
 })
 
-function updateState(element){
-    if(initSum() === 0 && operationState){
-
-    } else if(initSum() !==0 && operationState === false){
+function updateState(element) {
+    if(initSum() !== 0 && operationState === true){
+        let changeSymbolArr = [...displayArea2.textContent];
+        changeSymbolArr.splice(-1, 1, element.target.textContent);
+        displayArea2.textContent = changeSymbolArr.join('');
+    }
+    else if (initSum() !== 0 && operationState === false) {
         displayArea2.textContent = displayArea2.textContent + element.target.textContent;
         operationState = true;
     }
@@ -49,18 +52,19 @@ clearButton.addEventListener('click', event => {
     clrAll();
 })
 
-function clrAll(){
+function clrAll() {
     displayArea1.textContent = '';
     displayArea2.textContent = 0;
+    operationState = false;
 }
 
-function clr(){
+function clr() {
     displayArea2.textContent = 0;
 }
 // Functionality to display numbers on the page
 numberButtons.forEach(button => {
-
     button.addEventListener('click', event => {
+        operationState = false;
         if (displayArea2.textContent.indexOf('.') == -1 && event.target.textContent === '.') {
             displayArea2.textContent += '.'
         } else if (event.target.textContent !== '.' && initSum() !== 0) {
