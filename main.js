@@ -11,15 +11,18 @@ let operand = '';
 
 displayArea2.textContent = 0;
 let operationState = false;
+let pointState = false;
 
+
+// Event listeners for all operand buttons
 operationButtons.forEach(button => {
     button.addEventListener('click', event => {
-
-        operand = event.target.textContent;
+        pointState = false;
         updateState(event);
     })
 })
 
+// Function for handling the operands
 function updateState(element) {
     if(initSum() !== 0 && operationState === true){
         let changeSymbolArr = [...displayArea2.textContent];
@@ -32,7 +35,7 @@ function updateState(element) {
     }
 }
 
-// Functionality to check the Initial sum
+//Functionality to check the Initial sum
 function initSum() {
     return [...displayArea2.textContent].map(value => Number(value)).reduce((Accum, InitialVal) => Accum += InitialVal, 0);
 }
@@ -56,21 +59,25 @@ function clrAll() {
     displayArea1.textContent = '';
     displayArea2.textContent = 0;
     operationState = false;
+    pointState = false;
 }
 
 function clr() {
     displayArea2.textContent = 0;
 }
+
+
 // Functionality to display numbers on the page
 numberButtons.forEach(button => {
     button.addEventListener('click', event => {
         operationState = false;
-        if (displayArea2.textContent.indexOf('.') == -1 && event.target.textContent === '.') {
-            displayArea2.textContent += '.'
-        } else if (event.target.textContent !== '.' && initSum() !== 0) {
-            displayArea2.textContent += event.target.textContent;
-        } else if (event.target.textContent !== '.' && initSum() === 0) {
+        if (initSum()===0){
             displayArea2.textContent = event.target.textContent;
+        } else if(event.target.textContent === '.' && pointState === false){
+            displayArea2.textContent += event.target.textContent;
+            pointState = true;
+        } else if (event.target.textContent !== '.'){
+            displayArea2.textContent += event.target.textContent;
         }
     });
 });
