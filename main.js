@@ -10,22 +10,24 @@ let operationButtons = [...document.querySelectorAll('[data-operation]')]
 let operand = '';
 
 displayArea2.textContent = 0;
+let operationState = false;
 
 operationButtons.forEach(button=>{
     button.addEventListener('click', event=>{
+        
         operand = event.target.textContent;
-        updateState(operand, event);
+        updateState(event);
     })
 })
 
-function updateState(usedOperand, element){
-    if(displayArea2.textContent.slice(-1) !== usedOperand){
-        displayArea2.textContent = displayArea2.textContent + usedOperand;
+function updateState(element){
+    if(initSum() === 0 && operationState){
+
+    } else if(initSum() !==0 && operationState === false){
+        displayArea2.textContent = displayArea2.textContent + element.target.textContent;
+        operationState = true;
     }
 }
-
-
-console.log(operand)
 
 // Functionality to check the Initial sum
 function initSum() {
@@ -68,4 +70,3 @@ numberButtons.forEach(button => {
         }
     });
 });
-
