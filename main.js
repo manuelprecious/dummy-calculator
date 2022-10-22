@@ -16,6 +16,7 @@ let pointState = false;
 let stateNegativeOrPositive = true;
 
 
+
 // Event listeners for all operand buttons
 operationButtons.forEach(button => {
     button.addEventListener('click', event => {
@@ -73,15 +74,20 @@ function clr() {
 // Functionality to display numbers on the page
 numberButtons.forEach(button => {
     button.addEventListener('click', event => {
-        operationState = false;
+        
         stateNegativeOrPositive = true;
-        if (initSum()===0){
+        if (event.target.textContent === '0' && event.target.textContent.slice(-1) !== '0'){
+
+        } else if (initSum()===0){
             displayArea2.textContent = event.target.textContent;
+            operationState = false;
         } else if(event.target.textContent === '.' && pointState === false){
             displayArea2.textContent += event.target.textContent;
             pointState = true;
+            operationState = false;
         } else if (event.target.textContent !== '.'){
             displayArea2.textContent += event.target.textContent;
+            operationState = false;
         }
     });
 });
@@ -92,5 +98,7 @@ buttonPositiveOrNegative.addEventListener('click', e=>{
         stateNegativeOrPositive = false;
     } else if(stateNegativeOrPositive === false && operationState === true){
         return;
+    } else if (stateNegativeOrPositive === true && initSum()==0){
+        displayArea2.textContent = '-';
     }
 })

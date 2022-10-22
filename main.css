@@ -9,13 +9,13 @@
 }
 
 body {
-    background: #333;
+    background: #202124;
 }
 
 .main-container {
-    background: rgb(95, 79, 79);
+    background: #333333;
     width: 30%;
-    box-shadow: 0 0 5px 5px rgba(34, 34, 1, 0.26);
+    box-shadow: 0 0 5px 5px rgba(14, 14, 0, 0.658);
     margin: 5% auto;
     border-radius: 1%;
     padding: 10px;
@@ -53,7 +53,6 @@ body {
 
 .button-area {
     width: 100%;
-    background-color: orange;
     display: flex;
     gap: 1px;
     flex-wrap: nowrap;
@@ -65,7 +64,7 @@ body {
     height: 3em;
     flex-grow: 1;
     font-size: 1.5em;
-    background: #333;
+    background: transparent;
     border: 1px solid #ddd;
     outline: none;
     border-radius: 5%;
