@@ -4,6 +4,7 @@ let displayArea2 = document.querySelector('.display2');
 let deleteButton = document.querySelector('[data-delete]');
 let clearButton = document.querySelector('[data-clear]');
 let buttonDataState = document.querySelector('[data-state]');
+let buttonPositiveOrNegative = document.querySelector('[data-state]')
 
 let buttonEquals = document.querySelector('[data-equals]');
 let operationButtons = [...document.querySelectorAll('[data-operation]')]
@@ -12,6 +13,7 @@ let operand = '';
 displayArea2.textContent = 0;
 let operationState = false;
 let pointState = false;
+let stateNegativeOrPositive = true;
 
 
 // Event listeners for all operand buttons
@@ -60,6 +62,7 @@ function clrAll() {
     displayArea2.textContent = 0;
     operationState = false;
     pointState = false;
+    stateNegativeOrPositive = true;
 }
 
 function clr() {
@@ -71,6 +74,7 @@ function clr() {
 numberButtons.forEach(button => {
     button.addEventListener('click', event => {
         operationState = false;
+        stateNegativeOrPositive = true;
         if (initSum()===0){
             displayArea2.textContent = event.target.textContent;
         } else if(event.target.textContent === '.' && pointState === false){
@@ -81,3 +85,12 @@ numberButtons.forEach(button => {
         }
     });
 });
+
+buttonPositiveOrNegative.addEventListener('click', e=>{
+    if(stateNegativeOrPositive === true && operationState === true){
+        displayArea2.textContent += '-';
+        stateNegativeOrPositive = false;
+    } else if(stateNegativeOrPositive === false && operationState === true){
+        return;
+    }
+})
