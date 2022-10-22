@@ -76,8 +76,9 @@ numberButtons.forEach(button => {
     button.addEventListener('click', event => {
         
         stateNegativeOrPositive = true;
-        if (event.target.textContent === '0' && event.target.textContent.slice(-1) !== '0'){
-
+        if (pointState == false && event.target.textContent === '.' && displayArea2.textContent === '0' && displayArea2.textContent.length === 1){
+          displayArea2.textContent = '.';
+          pointState = true;
         } else if (initSum()===0){
             displayArea2.textContent = event.target.textContent;
             operationState = false;
