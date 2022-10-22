@@ -27,12 +27,12 @@ operationButtons.forEach(button => {
 
 // Function for handling the operands
 function updateState(element) {
-    if(initSum() !== 0 && operationState === true){
+    if(initSum() !== 0 && operationState === true && stateNegativeOrPositive === true){
         let changeSymbolArr = [...displayArea2.textContent];
         changeSymbolArr.splice(-1, 1, element.target.textContent);
         displayArea2.textContent = changeSymbolArr.join('');
     }
-    else if (initSum() !== 0 && operationState === false) {
+    else if (initSum() !== 0 && operationState === false && stateNegativeOrPositive === true) {
         displayArea2.textContent = displayArea2.textContent + element.target.textContent;
         operationState = true;
     }
