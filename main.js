@@ -14,8 +14,7 @@ displayArea2.textContent = 0;
 let operationState = false;
 let pointState = false;
 let stateNegativeOrPositive = true;
-
-
+let zeroAfterSymbol = false;
 
 // Event listeners for all operand buttons
 operationButtons.forEach(button => {
@@ -63,6 +62,7 @@ function clrAll() {
     displayArea2.textContent = 0;
     operationState = false;
     pointState = false;
+    zeroAfterSymbol = false;
     stateNegativeOrPositive = true;
 }
 
@@ -74,9 +74,21 @@ function clr() {
 // Functionality to display numbers on the page
 numberButtons.forEach(button => {
     button.addEventListener('click', event => {
-        
+
         stateNegativeOrPositive = true;
-        if (pointState == false && event.target.textContent === '.' && displayArea2.textContent === '0' && displayArea2.textContent.length === 1){
+        if(operationState === true && zeroAfterSymbol === true && event.target.textContent === '0'){
+            return;
+        } else if (operationState === true && zeroAfterSymbol === false && event.target.textContent === '0'){
+            displayArea2.textContent += '0'
+            zeroAfterSymbol = true;
+        } else if(operationState === true && zeroAfterSymbol === true && event.target.textContent !== '0'){
+            let replacingZero = [...displayArea2.textContent];
+            replacingZero.splice(-1, 1, event.target.textContent);
+            operationState = false;
+            zeroAfterSymbol = false;
+            displayArea2.textContent = replacingZero.join('');
+        }
+        else if (pointState == false && event.target.textContent === '.' && displayArea2.textContent === '0' && displayArea2.textContent.length === 1){
           displayArea2.textContent = '.';
           pointState = true;
         } else if (initSum()===0){
