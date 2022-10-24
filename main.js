@@ -17,6 +17,7 @@ let stateNegativeOrPositive = true;
 let zeroAfterSymbol = false;
 let myRegex = new RegExp('[0-9.]+', 'g');
 let stringOperatorRegex = /\s[-+x÷]\s$/g;
+let lastNumberToRegexPattern = /(?<=\s[+-x÷]\s)[.\d-]$/g
 
 // Event listeners for all operand buttons
 operationButtons.forEach(button => {
@@ -28,15 +29,30 @@ operationButtons.forEach(button => {
 
 // Function for handling the operands
 function updateState(element) {
-    if(initSum() !== 0 && operationState === true && stateNegativeOrPositive === true){
+    if(initSum() !== 0 
+    && operationState === false 
+    && element.target.textContent.match(stringOperatorRegex) !== displayArea2.textContent.slice(-3)){
+        displayArea2.textContent += element.target.textContent;
+        operationState = true;
+    }
+    else if(initSum() !==0
+    && operationState === true
+    && element.target.textContent.match(stringOperatorRegex)[0].split('').join("") 
+    === element.target.textContent.slice(-3).split("").join("")){
         let changeSymbolArr = [...displayArea2.textContent];
         changeSymbolArr.splice(-3, 3);
         displayArea2.textContent = changeSymbolArr.join('') + element.target.textContent;
     }
-    else if (initSum() !== 0 && operationState === false && stateNegativeOrPositive === true) {
-        displayArea2.textContent = displayArea2.textContent + element.target.textContent;
-        operationState = true;
-    }
+    // if(initSum() !== 0 && operationState === true && stateNegativeOrPositive === true){
+    //     let changeSymbolArr = [...displayArea2.textContent];
+    //     changeSymbolArr.splice(-3, 3);
+    //     displayArea2.textContent = changeSymbolArr.join('') + element.target.textContent;
+    //     console.log([...displayArea2.textContent])
+    // }
+    // else if (initSum() !== 0 && operationState === false && stateNegativeOrPositive === true) {
+    //     displayArea2.textContent = displayArea2.textContent + element.target.textContent;
+    //     operationState = true;
+    // }
 }
 
 //Functionality to check the Initial sum
@@ -56,20 +72,19 @@ deleteButton.addEventListener('click', event => {
         displayArea2.textContent = 0;
         pointState = false;
         return;
-    } else if(stringOperatorRegex.test(stringOperatorCheck) === true){
-        operationState = false;
+    } else if(lastNumberToRegexPattern.test(stringOperatorCheck) === true){
+        pointState = false;
+        operationState = true;
         stateNegativeOrPositive = true;
-        displayArea2.textContent = displayArea2.textContent.slice(0, -3);
-        return;
+
+    } else if(stringOperatorRegex.test(stringOperatorCheck) === true){
+         displayArea2.textContent = displayArea2.textContent.slice(0, -3);
+         return;
     } else if(stringNegativePositive[stringNegativePositive.length -1].indexOf('-') !== -1 
     && displayArea2.textContent.slice(-1) === '-'){
         stateNegativeOrPositive = true;
         operationState = true;
-    } else if(stringMatch[stringMatch.length-1].indexOf('.') !== -1 
-    && displayArea2.textContent.slice(-1) === '.'){
-        pointState = false;
-        operationState = false;
-    } else if(stringMatch[stringMatch.length-1].indexOf('.') !== -1){
+    }  else if(stringMatch[stringMatch.length-1].indexOf('.') !== -1){
         pointState = true;
         stateNegativeOrPositive = true;
     } else if(stringMatch[stringMatch.length-1].indexOf('.') === -1 
