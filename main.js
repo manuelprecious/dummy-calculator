@@ -47,21 +47,22 @@ function initSum() {
 deleteButton.addEventListener('click', event => {
     let myString = displayArea2.textContent;
     let myRegex = new RegExp('[0-9.]+', 'g');
-    let stateNegativePositive = new RegExp('[+-]', 'g');
+    let stringMatch = myString.match(myRegex);
+    let stringNegativePositive = '456 x 23 + -85 ÷ -55 x -';
+    let regexNegativePositive = /\s[+-÷x]\s\-$/g;
 
     if(displayArea2.textContent.length === 1){
         displayArea2.textContent = 0;
         return;
+    } else if(stringNegativePositive[stringNegativePositive.length -1].indexOf('-') !== -1 && displayArea2.textContent.slice(-1) === '-'){
+        operationState = true;
+        stateNegativeOrPositive = true;
     } else if(stringMatch[stringMatch.length-1].indexOf('.') !== -1 && displayArea2.textContent.slice(-1) === '.'){
         pointState = false;
     } else if(stringMatch[stringMatch.length-1].indexOf('.') !== -1){
         pointState = true;
     } else if(stringMatch[stringMatch.length-1].indexOf('.') === -1){
         pointState = false
-    }else if(displayArea2.textContent.slice(-1) === '-'){
-        // operationState = true;
-        // stateNegativeOrPositive = true;
-        console.log('I am false')
     }
     displayArea2.textContent = displayArea2.textContent.slice(0, -1);
 //     if (displayArea2.textContent.length <= 1) {
