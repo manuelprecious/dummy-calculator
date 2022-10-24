@@ -15,6 +15,8 @@ let operationState = false;
 let pointState = false;
 let stateNegativeOrPositive = true;
 let zeroAfterSymbol = false;
+let myRegex = new RegExp('[0-9.]+', 'g');
+let stringOperatorRegex = /\s[-+x÷]\s$/g;
 
 // Event listeners for all operand buttons
 operationButtons.forEach(button => {
@@ -28,8 +30,8 @@ operationButtons.forEach(button => {
 function updateState(element) {
     if(initSum() !== 0 && operationState === true && stateNegativeOrPositive === true){
         let changeSymbolArr = [...displayArea2.textContent];
-        changeSymbolArr.splice(-3, 3, element.target.textContent);
-        displayArea2.textContent = changeSymbolArr.join('');
+        changeSymbolArr.splice(-3, 3);
+        displayArea2.textContent = changeSymbolArr.join('') + element.target.textContent;
     }
     else if (initSum() !== 0 && operationState === false && stateNegativeOrPositive === true) {
         displayArea2.textContent = displayArea2.textContent + element.target.textContent;
@@ -46,45 +48,35 @@ function initSum() {
 // Functionality to delete one item from the end
 deleteButton.addEventListener('click', event => {
     let myString = displayArea2.textContent;
-    let myRegex = new RegExp('[0-9.]+', 'g');
     let stringMatch = myString.match(myRegex);
-    let stringNegativePositive = '456 x 23 + -85 ÷ -55 x -';
-    let regexNegativePositive = /\s[+-÷x]\s\-$/g;
+    let stringNegativePositive = displayArea2.textContent;
+    let stringOperatorCheck = displayArea2.textContent;
 
     if(displayArea2.textContent.length === 1){
         displayArea2.textContent = 0;
-        return;
-    } else if(stringNegativePositive[stringNegativePositive.length -1].indexOf('-') !== -1 && displayArea2.textContent.slice(-1) === '-'){
-        operationState = true;
-        stateNegativeOrPositive = true;
-    } else if(stringMatch[stringMatch.length-1].indexOf('.') !== -1 && displayArea2.textContent.slice(-1) === '.'){
         pointState = false;
+        return;
+    } else if(stringOperatorRegex.test(stringOperatorCheck) === true){
+        operationState = false;
+        stateNegativeOrPositive = true;
+        displayArea2.textContent = displayArea2.textContent.slice(0, -3);
+        return;
+    } else if(stringNegativePositive[stringNegativePositive.length -1].indexOf('-') !== -1 
+    && displayArea2.textContent.slice(-1) === '-'){
+        stateNegativeOrPositive = true;
+        operationState = true;
+    } else if(stringMatch[stringMatch.length-1].indexOf('.') !== -1 
+    && displayArea2.textContent.slice(-1) === '.'){
+        pointState = false;
+        operationState = false;
     } else if(stringMatch[stringMatch.length-1].indexOf('.') !== -1){
         pointState = true;
-    } else if(stringMatch[stringMatch.length-1].indexOf('.') === -1){
+        stateNegativeOrPositive = true;
+    } else if(stringMatch[stringMatch.length-1].indexOf('.') === -1 
+    && typeof Number(stringMatch.slice(-1))==='number'){
         pointState = false
     }
     displayArea2.textContent = displayArea2.textContent.slice(0, -1);
-//     if (displayArea2.textContent.length <= 1) {
-//         displayArea2.textContent = 0;
-//     } else if(stringMatch[stringMatch.length - 1].indexOf('.') !== -1){
-//         pointState = true;
-//         displayArea2.textContent = displayArea2.textContent.slice(0, -1);
-//     } else if(stringMatch[stringMatch.length - 1].indexOf('.') === -1){
-//         pointState = false;
-//         displayArea2.textContent = displayArea2.textContent.slice(0, -1);
-//     }
-//      else if(displayArea2.textContent.slice(-1) === '-'){
-//         operationState = true;
-//         stateNegativeOrPositive = true;
-//         displayArea2.textContent = displayArea2.textContent.slice(0, -1);
-//     } else if(displayArea2.textContent.slice(-1) != '-'){
-//         operationState = false;
-//         stateNegativeOrPositive = false;
-//         displayArea2.textContent = displayArea2.textContent.slice(0, -1);
-//     } else {
-//         displayArea2.textContent = displayArea2.textContent.slice(0, -1);
-//     }
 })
 
 // Functionality to clear Everything from the screen
@@ -123,7 +115,8 @@ numberButtons.forEach(button => {
             zeroAfterSymbol = false;
             displayArea2.textContent = replacingZero.join('');
         }
-        else if (pointState == false && event.target.textContent === '.' && displayArea2.textContent === '0' && displayArea2.textContent.length === 1){
+        else if (pointState == false && event.target.textContent === '.'
+        && displayArea2.textContent === '0' && displayArea2.textContent.length === 1){
           displayArea2.textContent = '.';
           pointState = true;
         } else if (initSum()===0){
@@ -148,5 +141,11 @@ buttonPositiveOrNegative.addEventListener('click', e=>{
         return;
     } else if (stateNegativeOrPositive === true && initSum()==0){
         displayArea2.textContent = '-';
+    } else if(e.target.textContent === '+/-' && stringOperatorRegex.test(displayArea2.textContent) === true){
+        displayArea2.textContent += '-'
+        stateNegativeOrPositive = false;
+    }
+    else{
+
     }
 })
