@@ -32,6 +32,7 @@ body {
     flex-direction: column;
     text-align: end;
     overflow: hidden;
+    position: relative;
 }
 
 .display-area .display1, .display2{
@@ -44,6 +45,19 @@ body {
 .display-area .display1{
     font-size: 1rem;
     padding: 4px 10px;
+}
+
+.display-area .outer-cover{
+    position: absolute;
+    background-color: transparent;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.display-area .display2 .outer-cover{
+position: fixed;
+width: 20%;
 }
 
 .button-area {
