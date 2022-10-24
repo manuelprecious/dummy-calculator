@@ -38,21 +38,12 @@ function updateState(element) {
     else if(initSum() !==0
     && operationState === true
     && element.target.textContent.match(stringOperatorRegex)[0].split('').join("") 
-    === element.target.textContent.slice(-3).split("").join("")){
+    === element.target.textContent.slice(-3).split("").join("")
+    && stateNegativeOrPositive === true){
         let changeSymbolArr = [...displayArea2.textContent];
         changeSymbolArr.splice(-3, 3);
         displayArea2.textContent = changeSymbolArr.join('') + element.target.textContent;
     }
-    // if(initSum() !== 0 && operationState === true && stateNegativeOrPositive === true){
-    //     let changeSymbolArr = [...displayArea2.textContent];
-    //     changeSymbolArr.splice(-3, 3);
-    //     displayArea2.textContent = changeSymbolArr.join('') + element.target.textContent;
-    //     console.log([...displayArea2.textContent])
-    // }
-    // else if (initSum() !== 0 && operationState === false && stateNegativeOrPositive === true) {
-    //     displayArea2.textContent = displayArea2.textContent + element.target.textContent;
-    //     operationState = true;
-    // }
 }
 
 //Functionality to check the Initial sum
@@ -68,6 +59,8 @@ deleteButton.addEventListener('click', event => {
     let stringNegativePositive = displayArea2.textContent;
     let stringOperatorCheck = displayArea2.textContent;
 
+
+
     if(displayArea2.textContent.length === 1){
         displayArea2.textContent = 0;
         pointState = false;
@@ -75,8 +68,7 @@ deleteButton.addEventListener('click', event => {
     } else if(lastNumberToRegexPattern.test(stringOperatorCheck) === true){
         pointState = false;
         operationState = true;
-        stateNegativeOrPositive = true;
-
+        displayArea2.textContent = displayArea2.textContent.slice(0, -1);
     } else if(stringOperatorRegex.test(stringOperatorCheck) === true){
          displayArea2.textContent = displayArea2.textContent.slice(0, -3);
          return;
@@ -84,14 +76,20 @@ deleteButton.addEventListener('click', event => {
     && displayArea2.textContent.slice(-1) === '-'){
         stateNegativeOrPositive = true;
         operationState = true;
+        displayArea2.textContent = displayArea2.textContent.slice(0, -1);
+    }  else if(stringMatch[stringMatch.length-1].indexOf('.') !== -1 && displayArea2.textContent.slice(-1) === '.'){
+        pointState = false;
+        stateNegativeOrPositive = true;
+        displayArea2.textContent = displayArea2.textContent.slice(0, -1);
+        return;
     }  else if(stringMatch[stringMatch.length-1].indexOf('.') !== -1){
         pointState = true;
         stateNegativeOrPositive = true;
-    } else if(stringMatch[stringMatch.length-1].indexOf('.') === -1 
-    && typeof Number(stringMatch.slice(-1))==='number'){
-        pointState = false
+        displayArea2.textContent = displayArea2.textContent.slice(0, -1);
+    } else if(stringMatch[stringMatch.length-1].indexOf('.') === -1){
+        pointState = false;
+        displayArea2.textContent = displayArea2.textContent.slice(0, -1);
     }
-    displayArea2.textContent = displayArea2.textContent.slice(0, -1);
 })
 
 // Functionality to clear Everything from the screen
