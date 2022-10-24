@@ -45,11 +45,45 @@ function initSum() {
 
 // Functionality to delete one item from the end
 deleteButton.addEventListener('click', event => {
-    if (displayArea2.textContent.length <= 1) {
+    let myString = displayArea2.textContent;
+    let myRegex = new RegExp('[0-9.]+', 'g');
+    let stateNegativePositive = new RegExp('[+-]', 'g');
+
+    if(displayArea2.textContent.length === 1){
         displayArea2.textContent = 0;
-    } else {
-        displayArea2.textContent = displayArea2.textContent.slice(0, -1);
+        return;
+    } else if(stringMatch[stringMatch.length-1].indexOf('.') !== -1 && displayArea2.textContent.slice(-1) === '.'){
+        pointState = false;
+    } else if(stringMatch[stringMatch.length-1].indexOf('.') !== -1){
+        pointState = true;
+    } else if(stringMatch[stringMatch.length-1].indexOf('.') === -1){
+        pointState = false
+    }else if(displayArea2.textContent.slice(-1) === '-'){
+        // operationState = true;
+        // stateNegativeOrPositive = true;
+        console.log('I am false')
     }
+    displayArea2.textContent = displayArea2.textContent.slice(0, -1);
+//     if (displayArea2.textContent.length <= 1) {
+//         displayArea2.textContent = 0;
+//     } else if(stringMatch[stringMatch.length - 1].indexOf('.') !== -1){
+//         pointState = true;
+//         displayArea2.textContent = displayArea2.textContent.slice(0, -1);
+//     } else if(stringMatch[stringMatch.length - 1].indexOf('.') === -1){
+//         pointState = false;
+//         displayArea2.textContent = displayArea2.textContent.slice(0, -1);
+//     }
+//      else if(displayArea2.textContent.slice(-1) === '-'){
+//         operationState = true;
+//         stateNegativeOrPositive = true;
+//         displayArea2.textContent = displayArea2.textContent.slice(0, -1);
+//     } else if(displayArea2.textContent.slice(-1) != '-'){
+//         operationState = false;
+//         stateNegativeOrPositive = false;
+//         displayArea2.textContent = displayArea2.textContent.slice(0, -1);
+//     } else {
+//         displayArea2.textContent = displayArea2.textContent.slice(0, -1);
+//     }
 })
 
 // Functionality to clear Everything from the screen
